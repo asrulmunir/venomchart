@@ -17,8 +17,18 @@
         }
 
         // Function to make API call
-        async function callAPI(token) {
-            const response = await fetch(`https://hst-api.wialon.com/wialon/ajax.html?svc=token/login&params={"token":"${token}","fl":1}`);
+        async function callWialonAPI(token) {
+            const params = JSON.stringify({
+                token: token,
+                fl: 2
+            });
+            const response = await fetch('https://hst-api.wialon.com/wialon/ajax.html?svc=token/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `params=${encodeURIComponent(params)}`
+            });
             if (!response.ok) {
                 throw new Error('API call failed');
             }
