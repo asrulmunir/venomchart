@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect with API Call</title>
+</head>
+<body>
+    <h1>Redirecting...</h1>
+    <p>If you are not redirected automatically, please wait a few seconds.</p>
+
+    <script>
+        // Function to get query string parameters
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Function to make API call
+        async function callAPI(token) {
+            const response = await fetch(`https://www.example.com/api.html?token=${token}`);
+            if (!response.ok) {
+                throw new Error('API call failed');
+            }
+            return response.json();
+        }
+
+        // Main function to handle the process
+        async function handleRedirect() {
+            try {
+                // Step 1: Get access_token from URL
+                const accessToken = getQueryParam('access_token');
+                if (!accessToken) {
+                    throw new Error('No access token provided');
+                }
+
+                // Step 2: Call API
+                const apiResult = await callAPI(accessToken);
+
+                // Step 3: Redirect to final URL
+                const redirectUrl = `https://www.example.com/redirect2.html?sid=${apiResult.eid}&user=${apiResult.user_name}`;
+                window.location.href = redirectUrl;
+            } catch (error) {
+                console.error('Error:', error);
+                document.body.innerHTML += `<p>Error: ${error.message}</p>`;
+            }
+        }
+
+        // Run the redirect process
+        handleRedirect();
+    </script>
+</body>
+</html>
