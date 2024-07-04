@@ -8,7 +8,6 @@
 <body>
     <h1>Redirecting...</h1>
     <p>If you are not redirected automatically, please wait a few seconds.</p>
-
     <script>
         // Function to get query string parameters
         function getQueryParam(param) {
@@ -45,10 +44,10 @@
                 }
 
                 // Step 2: Call API
-                const apiResult = await callAPI(accessToken);
+                const apiResult = await callWialonAPI(accessToken);
 
                 // Step 3: Redirect to final URL
-                const redirectUrl = `https://apps.wialon.com/sensolator/?sid=${apiResult.eid}&user=${apiResult.au}&lang=en&b=stable&v=1.51`;
+                const redirectUrl = `https://apps.wialon.com/sensolator/?sid=${apiResult.eid}&user=${encodeURIComponent(apiResult.user)}&lang=en&b=stable&v=1.51`;
                 window.location.href = redirectUrl;
             } catch (error) {
                 console.error('Error:', error);
