@@ -29,7 +29,7 @@
         // Callback function to handle API response
         function handleAPIResponse(response) {
             if (response && response.eid) {
-                const redirectUrl = `https://apps.wialon.com/sensolator/?sid=${response.eid}&user=${encodeURIComponent(response.user || '')}&lang=en&b=stable&v=1.51`;
+                const redirectUrl = `https://apps.wialon.com/sensolator/?sid=${response.eid}&user=${encodeURIComponent(response.au || '')}&lang=en&b=stable&v=1.51`;
                 window.location.href = redirectUrl;
             } else {
                 throw new Error('Invalid API response');
